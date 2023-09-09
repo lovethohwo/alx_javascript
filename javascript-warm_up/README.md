@@ -1,0 +1,1 @@
+This will be about javascript projects/task. Also its terminologies will be looked into.
