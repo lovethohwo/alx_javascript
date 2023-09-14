@@ -1,21 +1,26 @@
-const request = require('request');
+#!/usr/bin/node
 
-function countMoviesWithWedgeAntilles(apiUrl) {
-  const characterId = 18;
-  const characterUrl = `${apiUrl}people/${characterId}/`;
+const req = require("request"); // Import the 'request' module.
+// Get the movie ID
+const url = `${process.argv[2]}`; //Star Wars API endpoint
 
-  request.get(characterUrl, (error, response, body) => {
-    if (error) {
-      console.error('Error:', error);
-    } else if (response.statusCode !== 200) {
-      console.error('Status:', response.statusCode);
-    } else {
-      const characterData = JSON.parse(body);
-      const moviesWithWedgeAntilles = characterData.films.length;
-      console.log(moviesWithWedgeAntilles);
+// Make a GET request to the API
+req(url, (error, response, body) => {
+  if (error) {
+    return console.error(error);
+  }
+
+  const data = JSON.parse(body);
+  const films = data.results;
+  let count = 0;
+  const characterId = "18"; // Character ID for Wedge Antilles
+  const character = `https://swapi-api.alx-tools.com/api/people/${characterId}/`;
+
+  for (const film of films) {
+    if (film.characters.includes(character)) {
+      count += 1;
     }
-  });
-}
+  }
 
-const apiUrl = process.argv[2];
-countMoviesWithWedgeAntilles("https://swapi-api.alx-tools.com/api/films/");
+  console.log(count);
+});
