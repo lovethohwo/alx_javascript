@@ -1,31 +1,21 @@
+const request = require('request');
+
 function countMoviesWithWedgeAntilles(apiUrl) {
   const characterId = 18;
+  const characterUrl = `${apiUrl}people/${characterId}/`;
 
-  return fetch(apiUrl)
-    .then(response => response.json())
-    .then(data => {
-      const films = data.results;
-      let count = 0;
-
-      for (const film of films) {
-        const characters = film.characters;
-        if (characters.includes(`https://swapi-api.alx-tools.com/api/people/${characterId}/`)) {
-          count++;
-        }
-      }
-
-      return count;
-    })
-    .catch(error => {
-      console.error('Error occurred:', error);
-      return null;
-    });
-}
-
-const apiUrl = 'https://swapi-api.alx-tools.com/api/films/';
-countMoviesWithWedgeAntilles(apiUrl)
-  .then(movieCount => {
-    if (movieCount !== null) {
-      console.log(`The number of movies where Wedge Antilles is present: ${movieCount}`);
+  request.get(characterUrl, (error, response, body) => {
+    if (error) {
+      console.error('Error:', error);
+    } else if (response.statusCode !== 200) {
+      console.error('Status:', response.statusCode);
+    } else {
+      const characterData = JSON.parse(body);
+      const moviesWithWedgeAntilles = characterData.films.length;
+      console.log(moviesWithWedgeAntilles);
     }
   });
+}
+
+const apiUrl = process.argv[2];
+countMoviesWithWedgeAntilles(apiUrl);
