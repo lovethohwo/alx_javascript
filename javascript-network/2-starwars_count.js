@@ -18,4 +18,4 @@ function countMoviesWithWedgeAntilles(apiUrl) {
 }
 
 const apiUrl = process.argv[2];
-countMoviesWithWedgeAntilles(apiUrl);
+countMoviesWithWedgeAntilles("https://swapi-api.alx-tools.com/api/films/");
