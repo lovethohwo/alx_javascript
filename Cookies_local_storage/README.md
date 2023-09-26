@@ -1,0 +1,1 @@
+A task on how to integrate cookies to HTML using JavaScript.

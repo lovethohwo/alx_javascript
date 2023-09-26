@@ -1,0 +1,54 @@
+<!-- Create Html page with DOM effect -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cookies</title>
+  </head>
+  <body>
+    <h1>Login to the website</h1>
+    <input type="text" placeholder="firstname" id="firstname" />
+    <input type="text" placeholder="email" id="email" />
+    <button onclick="setCookies()">Log me in</button>
+
+    <h1>Cookies</h1>
+    <button onclick="showCookies()">Show the cookies</button>
+
+    <!-- in the js script, the functions made the work on html page more dynamic and realistic -->
+    <!-- trim(), this removes white characteristic -->
+    <!-- making th cookie expire in 10 days at date in setCookies() -->
+    <script>
+      function setCookies() {
+        let firstname = document.getElementById("firstname").value;
+        let email = document.getElementById("email").value;
+
+        let date = new Date();
+        date.setTime(date.getTime() + 10 * 24 * 60 * 60 * 1000); // 10 days
+        let expires = "expires=" + date.toUTCString();
+
+        document.cookie = "firstname=" + firstname + ";" + expires;
+        document.cookie = "email=" + email + ";" + expires;
+      }
+
+      function showCookies() {
+        let cookies = document.cookie.split(";");
+
+        let p = document.createElement("p");
+        p.innerHTML = "Cookies: ";
+
+        for (let i = 0; i < cookies.length; i++) {
+          let cookie = cookies[i].trim();
+          if (cookie.indexOf("firstname") == 0) {
+            p.innerHTML += cookie.substring("firstname".length + 1);
+          } else if (cookie.indexOf("email") == 0) {
+            p.innerHTML += cookie.substring("email".length + 1);
+          }
+        }
+
+        document.body.appendChild(p);
+      }
+    </script>
+  </body>
+</html>
