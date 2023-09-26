@@ -1,0 +1,1 @@
+The task will be centered on how dom manipulation is used.
